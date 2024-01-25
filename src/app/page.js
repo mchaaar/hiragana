@@ -12,6 +12,8 @@ export default function Home() {
   const hiraganaKeys = Object.keys(hiraganas.base);
   const [buttonTexts, setButtonTexts] = useState([]);
   const [currentHiragana, setCurrentHiragana] = useState('あ');
+  const [selectedButton, setSelectedButton] = useState(null);
+  const [buttonStyle, setButtonStyle] = useState("rounded-2xl bg-white/10 px-5 py-4 text-3xl font-semibold text-white shadow-sm hover:bg-white/20 ms-10");
 
   useEffect(() => {
     updateButtonHiraganas();
@@ -59,42 +61,46 @@ export default function Home() {
     }
   }
 
-  function handleClick(event) {
+  function handleClick(event, index) {
     const buttonText = event.target.textContent;
-    submitAnswer(buttonText);
+    submitAnswer(buttonText, index);
   }
 
-  function submitAnswer(answer) {
-    const isCorrect = hiraganas.base[currentHiragana] == answer ? true : false;
-    isCorrect ? correct() : incorrect();
+  function submitAnswer(answer, buttonIndex) {
+    const isCorrect = hiraganas.base[currentHiragana] == answer;
+    isCorrect ? correct() : incorrect(buttonIndex);
   }
 
   function correct(){
     nextHiragana();
   }
 
-  function incorrect(){
-    
+  function incorrect(buttonIndex) {
+    setSelectedButton(buttonIndex);
+    setButtonStyle("rounded-2xl bg-red-500 px-5 py-4 text-3xl font-semibold text-white shadow-sm hover:bg-red-600 ms-10");
+
+    setTimeout(() => {
+      setButtonStyle("rounded-2xl bg-white/10 px-5 py-4 text-3xl font-semibold text-white shadow-sm hover:bg-white/20 ms-10");
+      setSelectedButton(null);
+    }, 400);
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center content-center">
+    <main className="flex flex-col items-center content-center">
       <Spline
         scene="https://prod.spline.design/BVpsusTnFqCtrLKj/scene.splinecode"
         onLoad={onLoad}
       />
       <div className="mt-20">
         {buttonTexts.map((text, index) => (
-
           <button
             key={index}
             type="button"
-            onClick={handleClick}
-            className="rounded-2xl bg-white/10 px-5 py-4 text-3xl font-semibold text-white shadow-sm hover:bg-white/20 ms-10"
+            onClick={(e) => handleClick(e, index)}
+            className={selectedButton === index ? buttonStyle : "rounded-2xl bg-white/10 px-5 py-4 text-3xl font-semibold text-white shadow-sm hover:bg-white/20 ms-10"}
           >
             <span className="buttonText">{text}</span>
           </button>
-
         ))}
       </div>
     </main>
