@@ -65,25 +65,32 @@ export default function Home() {
   }
 
   function submitAnswer(answer) {
-    const correct = hiraganas.base[currentHiragana] == answer ? true : false;
-    console.log(correct);
+    const isCorrect = hiraganas.base[currentHiragana] == answer ? true : false;
+    isCorrect ? correct() : incorrect();
+  }
+
+  function correct(){
     nextHiragana();
   }
 
+  function incorrect(){
+    
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center content-center">
       <Spline
         scene="https://prod.spline.design/BVpsusTnFqCtrLKj/scene.splinecode"
         onLoad={onLoad}
       />
-      <div className="relative inline-flex group">
+      <div className="mt-20">
         {buttonTexts.map((text, index) => (
 
           <button
             key={index}
             type="button"
             onClick={handleClick}
-            className="rounded-md bg-white/10 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20"
+            className="rounded-2xl bg-white/10 px-5 py-4 text-3xl font-semibold text-white shadow-sm hover:bg-white/20 ms-10"
           >
             <span className="buttonText">{text}</span>
           </button>
