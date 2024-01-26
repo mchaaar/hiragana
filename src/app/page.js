@@ -3,7 +3,9 @@
 import Spline from '@splinetool/react-spline';
 import { useRef, useState, useEffect } from "react";
 import { hiraganas } from './components/Hiraganas';
-import { Switch } from '@headlessui/react'
+import { Switch } from '@headlessui/react';
+import { PlusIcon } from '@heroicons/react/20/solid';
+import { MinusIcon } from '@heroicons/react/20/solid';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -20,17 +22,18 @@ export default function Home() {
   const [selectedButton, setSelectedButton] = useState(null);
   const [buttonStyle, setButtonStyle] = useState("rounded-2xl bg-white/10 px-5 py-4 text-3xl font-semibold text-white shadow-sm hover:bg-white/20 ms-10");
   const [hardMode, setHardMode] = useState(false);
+  const [currentDifficulty, setCurrentDifficulty] = useState(0);
 
   useEffect(() => {
-    updateButtonHiraganas(currentHiragana, hardMode ? 'hard' : 'easy');
+    updateButtonHiraganas(currentHiragana, hardMode ? 'hard' : 'easy', currentDifficulty);
   }, []);
 
-  function updateButtonHiraganas(currentHiraganaKey, mode) {
+  function updateButtonHiraganas(currentHiraganaKey, mode, difficulty) {
     let newButtonTexts = [];
     const correctAnswer = hiraganas.base[currentHiraganaKey];
     newButtonTexts.push(correctAnswer);
 
-    while (newButtonTexts.length < hiraganas.mode.base[mode]) {
+    while (newButtonTexts.length < (hiraganas.mode.base[mode] + difficulty)) {
       const randomIndex = Math.floor(Math.random() * hiraganaKeys.length);
       const hiraganaValue = hiraganas.base[hiraganaKeys[randomIndex]];
 
@@ -61,7 +64,7 @@ export default function Home() {
       }
       splineRef.current.setVariable('Hiragana', randomHiragana);
       setCurrentHiragana(randomHiragana);
-      updateButtonHiraganas(randomHiragana, hardMode ? 'hard' : 'easy');
+      updateButtonHiraganas(randomHiragana, hardMode ? 'hard' : 'easy', currentDifficulty);
     } else {
       console.error('Spline object not found...');
     }
@@ -94,7 +97,24 @@ export default function Home() {
   function handleModeChange() {
     const newMode = !hardMode;
     setHardMode(newMode);
-    updateButtonHiraganas(currentHiragana, newMode ? 'hard' : 'easy');
+    setCurrentDifficulty(0);
+    updateButtonHiraganas(currentHiragana, newMode ? 'hard' : 'easy', 0);
+  }
+
+  function increaseDifficulty() {
+    if (hardMode && currentDifficulty < hiraganas.mode.base.max){
+      const newDifficulty = currentDifficulty + 1;
+      setCurrentDifficulty(newDifficulty);
+      updateButtonHiraganas(currentHiragana, hardMode ? 'hard' : 'easy', newDifficulty);
+    }
+  }
+
+  function decreaseDifficulty() {
+    if (hardMode && currentDifficulty <= hiraganas.mode.base.max && currentDifficulty > 0){
+      const newDifficulty = currentDifficulty - 1;
+      setCurrentDifficulty(newDifficulty);
+      updateButtonHiraganas(currentHiragana, hardMode ? 'hard' : 'easy', newDifficulty);
+    }
   }
 
   return (
@@ -118,6 +138,15 @@ export default function Home() {
       </div>
       <div className='mt-20'>
         <Switch.Group as="div" className="flex items-center">
+          {hardMode && (
+            <button
+              type="button"
+              className="me-3 rounded-full bg-gray-600 p-1 text-white shadow-sm hover:bg-gray-500 hover:scale-105 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800"
+              onClick={decreaseDifficulty}
+            >
+              <MinusIcon className="h-5 w-5" aria-hidden="true" />
+            </button>
+          )}
           <span className={hardMode ? 'text-gray-600 text-xl me-4 mb-1' : 'text-gray-200 text-xl me-4 mb-1'}>easy</span>
           <Switch
             checked={hardMode}
@@ -135,6 +164,15 @@ export default function Home() {
             />
           </Switch>
           <span className={hardMode ? 'text-gray-200 text-xl ms-4 mb-1' : 'text-gray-600 text-xl ms-4 mb-1'}>hard</span>
+          {hardMode && (
+            <button
+              type="button"
+              className="ms-3  rounded-full bg-gray-600 p-1 text-white shadow-sm hover:bg-gray-500 hover:scale-105 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800"
+              onClick={increaseDifficulty}
+            >
+              <PlusIcon className="h-5 w-5" aria-hidden="true" />
+            </button>
+          )}
         </Switch.Group>
       </div>
     </main>

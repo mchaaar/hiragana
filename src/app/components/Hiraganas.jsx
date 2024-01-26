@@ -10,6 +10,7 @@ export const hiraganas = {
         base: {
             easy: 3,
             hard: 5,
+            max: 9,
         },
     },
 
