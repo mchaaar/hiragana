@@ -1,11 +1,11 @@
 
 
 # Want to use the website ?
-### Simply go to : [https://hiragana.vercel.app/](https://hiragana.vercel.app/)
+### Visit : [https://hiragana.vercel.app/](https://hiragana.vercel.app/)
 
-![Thumbnail for the Crossbowmen](https://github.com/Laiinn/hiragana/blob/main/public/thumbnail1.png?raw=true)  
+![Website's preview](https://github.com/Laiinn/hiragana/blob/main/public/thumbnailv2.png?raw=true)  
 
-# Want to modify it or contribute ?
+# Want to contribute ?
 
 ## How to install
 
