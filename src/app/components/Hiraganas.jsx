@@ -6,6 +6,13 @@ export const hiraganas = {
         combo: 10,
     },
 
+    mode: {
+        base: {
+            easy: 3,
+            hard: 5,
+        },
+    },
+
     base: {
         あ: 'a',
         い: 'i',
