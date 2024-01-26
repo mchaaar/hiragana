@@ -132,16 +132,28 @@ export default function Home() {
   const hiraganaArray = Object.entries(hiraganas.base).map(([character, romaji]) => {
     return { hiragana: character, romaji: romaji };
   });
-  
+
+  const sortedHiraganas = Object.entries(hiraganas.base).map(([character, romaji]) => {
+    return { hiragana: character, romaji: romaji };
+  });
+
+  const groupedHiraganaArrays = Object.keys(hiraganas).reduce((acc, key) => {
+    if (typeof hiraganas[key] === 'object') {
+      acc[key] = Object.entries(hiraganas[key]).map(([character, romaji]) => ({
+        hiragana: character,
+        romaji: romaji
+      }));
+    }
+    return acc;
+  }, {});
+
   return (
     <main className="flex flex-col items-center">
-
       <Spline
         scene="https://prod.spline.design/BVpsusTnFqCtrLKj/scene.splinecode"
         className="w-full h-auto max-h-[1400px] md:max-h-[700px]"
         onLoad={onLoad}
       />
-
       <div className="mt-20 justify-center">
         {buttonTexts.map((text, index) => (
           <button
@@ -154,25 +166,22 @@ export default function Home() {
           </button>
         ))}
       </div>
-
       <div className='mt-20 flex flex-col items-center'>
-        <Switch.Group as="div" className="justify-center">
+        <Switch.Group as="div" className="flex items-center">
           {hardMode && (
             <button
               type="button"
-              className="me-3 rounded-full bg-gray-600 p-1 text-gray-100 shadow-sm hover:bg-gray-500 hover:scale-105 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800"
+              className="me-3 rounded-full p-1 text-gray-100 shadow-sm hover:scale-125 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800"
               onClick={decreaseDifficulty}
             >
               <MinusIcon className="h-5 w-5" aria-hidden="true" />
             </button>
           )}
-          <span className={hardMode ? 'text-gray-600 text-xl me-4 mb-1' : 'text-gray-100 text-xl me-4 mb-1'}>easy</span>
+          <span className={hardMode ? 'text-gray-600 text-xl me-4' : 'text-gray-100 text-xl me-4'}>easy</span>
           <Switch
             checked={hardMode}
             onChange={handleModeChange}
-            className={
-              'bg-gray-600 relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2'
-            }
+            className='bg-gray-600 relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2'
           >
             <span
               aria-hidden="true"
@@ -182,20 +191,19 @@ export default function Home() {
               )}
             />
           </Switch>
-          <span className={hardMode ? 'text-gray-100 text-xl ms-4 mb-1' : 'text-gray-600 text-xl ms-4 mb-1'}>hard</span>
+          <span className={hardMode ? 'text-gray-100 text-xl ms-4' : 'text-gray-600 text-xl ms-4'}>hard</span>
           {hardMode && (
             <button
               type="button"
-              className="ms-3 rounded-full bg-gray-600 p-1 text-white shadow-sm hover:bg-gray-500 hover:scale-105 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800"
+              className="ms-3 rounded-full p-1 text-white shadow-sm hover:scale-125 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800"
               onClick={increaseDifficulty}
             >
               <PlusIcon className="h-5 w-5" aria-hidden="true" />
             </button>
           )}
         </Switch.Group>
-
-        <Switch.Group as="div" className="mt-6 ms-2.5 justify-center">
-          <span className={listDisplayed ? 'text-gray-600 text-xl me-4 mb-1' : 'text-gray-100 text-xl me-4 mb-1'}>hide hiragana's list</span>
+        <Switch.Group as="div" className="mt-6 ms-2.5 flex items-center">
+          <span className={listDisplayed ? 'text-gray-600 text-xl me-4' : 'text-gray-100 text-xl me-4'}>hide list</span>
           <Switch
             checked={listDisplayed}
             onChange={handleListDisplay}
@@ -211,36 +219,37 @@ export default function Home() {
               )}
             />
           </Switch>
-          <span className={listDisplayed ? 'text-gray-100 text-xl ms-4 mb-1' : 'text-gray-600 text-xl ms-4 mb-1'}>show hiragana's list</span>
+          <span className={listDisplayed ? 'text-gray-100 text-xl ms-4' : 'text-gray-600 text-xl ms-4'}>show list</span>
         </Switch.Group>
-
-        {listDisplayed && (
-          <Switch.Group as="div" className="mt-6 me-6 justify-center">
-            <span className={sorted ? 'text-gray-600 text-xl me-4 mb-1' : 'text-gray-100 text-xl me-4 mb-1'}>unsorted list</span>
-            <Switch
-              checked={sorted}
-              onChange={handleSortedChange}
-              className={
-                'bg-gray-600 relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2'
-              }
-            >
-              <span
-                aria-hidden="true"
-                className={classNames(
-                  sorted ? 'translate-x-5' : 'translate-x-0',
-                  'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-300 ease-in-out'
-                )}
-              />
-            </Switch>
-            <span className={sorted ? 'text-gray-100 text-xl ms-4 mb-1' : 'text-gray-600 text-xl ms-4 mb-1'}>sorted list</span>
-          </Switch.Group>
-        )}
-
       </div>
       {listDisplayed && (
         <div className='mt-20'>
           <h2 className='text-center text-4xl mb-10'>List of Hiraganas</h2>
+
+          {listDisplayed && (
+            <Switch.Group as="div" className="mb-6 me-6 justify-center flex items-center">
+              <span className={sorted ? 'text-gray-600 text-xl me-4' : 'text-gray-100 text-xl me-4'}>unsorted</span>
+              <Switch
+                checked={sorted}
+                onChange={handleSortedChange}
+                className={
+                  'bg-gray-600 relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2'
+                }
+              >
+                <span
+                  aria-hidden="true"
+                  className={classNames(
+                    sorted ? 'translate-x-5' : 'translate-x-0',
+                    'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-300 ease-in-out'
+                  )}
+                />
+              </Switch>
+              <span className={sorted ? 'text-gray-100 text-xl ms-4' : 'text-gray-600 text-xl ms-4'}>sorted</span>
+            </Switch.Group>
+          )}
+
           <div className="grid grid-cols-5 md:grid-cols-5 gap-4 p-4 max-w-max mx-auto text-gray-100">
+            
             {!sorted && (
               hiraganaArray.map((item, index) => (
                 <div key={index} className="text-center border border-gray-700 p-2">
@@ -249,17 +258,47 @@ export default function Home() {
                 </div>
               ))
             )}
-            {sorted && (
-              hiraganaArray.map((item, index) => (
-                <div key={index} className="text-center border border-gray-700 p-2">
-                  <div className="text-6xl">{item.hiragana}</div>
-                  <div className="mt-4 text-3xl">{item.romaji}</div>
-                </div>
-              ))
-            )}
+
+            {
+              sorted && (
+                <>
+                  {hiraganas.sortedSimpleToMo.map(group =>
+                    groupedHiraganaArrays[group].map((item, index) => (
+                      <div key={`${group}-${index}`} className="text-center border border-gray-700 p-2">
+                        <div className="text-6xl">{item.hiragana}</div>
+                        <div className="mt-4 text-3xl">{item.romaji}</div>
+                      </div>
+                    ))
+                  )}
+                  {groupedHiraganaArrays['y'].map((item, index) => (
+                    <div key={`y-${index}`} className="text-center border border-gray-700 p-2">
+                      <div className="text-6xl">{item.hiragana}</div>
+                      <div className="mt-4 text-3xl">{item.romaji}</div>
+                    </div>
+                  ))}
+                  {groupedHiraganaArrays['r'].map((item, index) => (
+                    <div key={`y-${index}`} className="text-center border border-gray-700 p-2">
+                      <div className="text-6xl">{item.hiragana}</div>
+                      <div className="mt-4 text-3xl">{item.romaji}</div>
+                    </div>
+                  ))}
+                  {groupedHiraganaArrays['w'].map((item, index) => (
+                    <div key={`y-${index}`} className="text-center border border-gray-700 p-2">
+                      <div className="text-6xl">{item.hiragana}</div>
+                      <div className="mt-4 text-3xl">{item.romaji}</div>
+                    </div>
+                  ))}
+                  {groupedHiraganaArrays['x'].map((item, index) => (
+                    <div key={`y-${index}`} className="text-center border border-gray-700 p-2">
+                      <div className="text-6xl">{item.hiragana}</div>
+                      <div className="mt-4 text-3xl">{item.romaji}</div>
+                    </div>
+                  ))}
+                </>
+              )
+            }
           </div>
         </div>
-
       )}
     </main>
   );

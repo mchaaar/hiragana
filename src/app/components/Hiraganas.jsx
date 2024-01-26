@@ -1,5 +1,7 @@
 export const hiraganas = {
 
+    sortedSimpleToMo: ['aiueo', 'k', 's', 't', 'n', 'm'],
+
     queueSize: {
         base: 10,
         dakuon: 6,
@@ -142,7 +144,7 @@ export const hiraganas = {
         を: 'wo',
     },
 
-    n: {
+    x: {
         ん: 'n',
     },
 }
