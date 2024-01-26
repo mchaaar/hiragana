@@ -103,7 +103,7 @@ export default function Home() {
 
   function increaseDifficulty() {
     if (hardMode && currentDifficulty < hiraganas.mode.base.max){
-      const newDifficulty = currentDifficulty + 1;
+      const newDifficulty = currentDifficulty + 2;
       setCurrentDifficulty(newDifficulty);
       updateButtonHiraganas(currentHiragana, hardMode ? 'hard' : 'easy', newDifficulty);
     }
@@ -111,7 +111,7 @@ export default function Home() {
 
   function decreaseDifficulty() {
     if (hardMode && currentDifficulty <= hiraganas.mode.base.max && currentDifficulty > 0){
-      const newDifficulty = currentDifficulty - 1;
+      const newDifficulty = currentDifficulty - 2;
       setCurrentDifficulty(newDifficulty);
       updateButtonHiraganas(currentHiragana, hardMode ? 'hard' : 'easy', newDifficulty);
     }
@@ -167,7 +167,7 @@ export default function Home() {
           {hardMode && (
             <button
               type="button"
-              className="ms-3  rounded-full bg-gray-600 p-1 text-white shadow-sm hover:bg-gray-500 hover:scale-105 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800"
+              className="ms-3 rounded-full bg-gray-600 p-1 text-white shadow-sm hover:bg-gray-500 hover:scale-105 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800"
               onClick={increaseDifficulty}
             >
               <PlusIcon className="h-5 w-5" aria-hidden="true" />
