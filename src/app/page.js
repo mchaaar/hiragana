@@ -22,7 +22,7 @@ export default function Home() {
   const [selectedButton, setSelectedButton] = useState(null);
   const [buttonStyle, setButtonStyle] = useState("rounded-2xl bg-white/10 px-5 py-4 text-3xl font-semibold text-white shadow-sm hover:bg-white/20 ms-10");
   const [hardMode, setHardMode] = useState(false);
-  const [currentDifficulty, setCurrentDifficulty] = useState(0);
+  const [currentDifficulty, setCurrentDifficulty] = useState(3);
 
   useEffect(() => {
     updateButtonHiraganas(currentHiragana, hardMode ? 'hard' : 'easy', currentDifficulty);
@@ -33,7 +33,7 @@ export default function Home() {
     const correctAnswer = hiraganas.base[currentHiraganaKey];
     newButtonTexts.push(correctAnswer);
 
-    while (newButtonTexts.length < (hiraganas.mode.base[mode] + difficulty)) {
+    while ((newButtonTexts.length + hiraganas.mode.base[mode]) < (hiraganas.mode.base[mode] + difficulty)) {
       const randomIndex = Math.floor(Math.random() * hiraganaKeys.length);
       const hiraganaValue = hiraganas.base[hiraganaKeys[randomIndex]];
 
@@ -97,21 +97,21 @@ export default function Home() {
   function handleModeChange() {
     const newMode = !hardMode;
     setHardMode(newMode);
-    setCurrentDifficulty(0);
-    updateButtonHiraganas(currentHiragana, newMode ? 'hard' : 'easy', 0);
+    setCurrentDifficulty(newMode ? 5 : 3);
+    updateButtonHiraganas(currentHiragana, newMode ? 'hard' : 'easy', newMode ? 5 : 3);
   }
 
   function increaseDifficulty() {
     if (hardMode && currentDifficulty < hiraganas.mode.base.max){
-      const newDifficulty = currentDifficulty + 2;
+      const newDifficulty = currentDifficulty + 1;
       setCurrentDifficulty(newDifficulty);
       updateButtonHiraganas(currentHiragana, hardMode ? 'hard' : 'easy', newDifficulty);
     }
   }
 
   function decreaseDifficulty() {
-    if (hardMode && currentDifficulty <= hiraganas.mode.base.max && currentDifficulty > 0){
-      const newDifficulty = currentDifficulty - 2;
+    if (currentDifficulty > hiraganas.mode.base.easy){
+      const newDifficulty = currentDifficulty - 1;
       setCurrentDifficulty(newDifficulty);
       updateButtonHiraganas(currentHiragana, hardMode ? 'hard' : 'easy', newDifficulty);
     }
