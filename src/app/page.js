@@ -128,7 +128,7 @@ export default function Home() {
     const isListDisplayed = !listDisplayed;
     setListDisplayed(isListDisplayed);
   }
-  
+ 
   const hiraganaArray = Object.entries(hiraganas.base).map(([character, romaji]) => {
     return { hiragana: character, romaji: romaji };
   });
@@ -224,10 +224,10 @@ export default function Home() {
       </div>
       {listDisplayed && (
         <div className='mt-20'>
-          <h2 className='text-center text-4xl mb-10'>List of Hiraganas</h2>
+          <h2 className='text-center text-gray-100 text-4xl mb-12'>List of Hiraganas</h2>
 
           {listDisplayed && (
-            <Switch.Group as="div" className="mb-6 me-6 justify-center flex items-center">
+            <Switch.Group as="div" className="mb-12 me-6 justify-center flex items-center">
               <span className={sorted ? 'text-gray-600 text-xl me-4' : 'text-gray-100 text-xl me-4'}>unsorted</span>
               <Switch
                 checked={sorted}
@@ -252,8 +252,8 @@ export default function Home() {
             
             {!sorted && (
               hiraganaArray.map((item, index) => (
-                <div key={index} className="text-center border border-gray-700 p-2">
-                  <div className="text-6xl">{item.hiragana}</div>
+                <div key={index} className="text-center border border-gray-700 p-5">
+                  <div className="text-6xl cursor-pointer hover:scale-125">{item.hiragana}</div>
                   <div className="mt-4 text-3xl">{item.romaji}</div>
                 </div>
               ))
@@ -264,33 +264,33 @@ export default function Home() {
                 <>
                   {hiraganas.sortedSimpleToMo.map(group =>
                     groupedHiraganaArrays[group].map((item, index) => (
-                      <div key={`${group}-${index}`} className="text-center border border-gray-700 p-2">
-                        <div className="text-6xl">{item.hiragana}</div>
+                      <div key={`${group}-${index}`} className="text-center border border-gray-700 p-5">
+                        <div className="text-6xl cursor-pointer hover:scale-125">{item.hiragana}</div>
                         <div className="mt-4 text-3xl">{item.romaji}</div>
                       </div>
                     ))
                   )}
                   {groupedHiraganaArrays['y'].map((item, index) => (
-                    <div key={`y-${index}`} className="text-center border border-gray-700 p-2">
-                      <div className="text-6xl">{item.hiragana}</div>
+                    <div key={`y-${index}`} className="text-center border border-gray-700 p-5">
+                      <div className="text-6xl cursor-pointer hover:scale-125">{item.hiragana}</div>
                       <div className="mt-4 text-3xl">{item.romaji}</div>
                     </div>
                   ))}
                   {groupedHiraganaArrays['r'].map((item, index) => (
-                    <div key={`y-${index}`} className="text-center border border-gray-700 p-2">
-                      <div className="text-6xl">{item.hiragana}</div>
+                    <div key={`y-${index}`} className="text-center border border-gray-700 p-5">
+                      <div className="text-6xl cursor-pointer hover:scale-125">{item.hiragana}</div>
                       <div className="mt-4 text-3xl">{item.romaji}</div>
                     </div>
                   ))}
                   {groupedHiraganaArrays['w'].map((item, index) => (
-                    <div key={`y-${index}`} className="text-center border border-gray-700 p-2">
-                      <div className="text-6xl">{item.hiragana}</div>
+                    <div key={`y-${index}`} className="text-center border border-gray-700 p-5">
+                      <div className="text-6xl cursor-pointer hover:scale-125">{item.hiragana}</div>
                       <div className="mt-4 text-3xl">{item.romaji}</div>
                     </div>
                   ))}
                   {groupedHiraganaArrays['x'].map((item, index) => (
-                    <div key={`y-${index}`} className="text-center border border-gray-700 p-2">
-                      <div className="text-6xl">{item.hiragana}</div>
+                    <div key={`y-${index}`} className="text-center border border-gray-700 p-5">
+                      <div className="text-6xl cursor-pointer hover:scale-125">{item.hiragana}</div>
                       <div className="mt-4 text-3xl">{item.romaji}</div>
                     </div>
                   ))}
