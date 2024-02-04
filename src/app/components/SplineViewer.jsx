@@ -1,8 +1,12 @@
 'use client'
 
 import Spline from '@splinetool/react-spline';
+import { useHiraganaContext } from './hooks/HiraganaContext';
 
-export default function SplineViewer({ onLoad }) {
+export default function SplineViewer() {
+
+    const { onLoad } = useHiraganaContext();
+
     return (
         <Spline
             scene="https://prod.spline.design/BVpsusTnFqCtrLKj/scene.splinecode"

@@ -1,6 +1,11 @@
 'use client'
 
-export default function HiraganaButtons({ handleClick, buttonTexts, selectedButton, buttonStyle }) {
+import { useHiraganaContext } from './hooks/HiraganaContext';
+
+export default function HiraganaButtons() {
+
+    const { handleClick, buttonTexts, selectedButton, buttonStyle } = useHiraganaContext();
+
     return (
         <div className="mt-20 justify-center">
             {buttonTexts.map((text, index) => (

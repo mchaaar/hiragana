@@ -1,6 +1,10 @@
 import { Switch } from '@headlessui/react';
+import { useHiraganaContext } from './hooks/HiraganaContext';
 
-export default function HiraganaDifficulty({listDisplayed, handleListDisplay, classNames}) {
+export default function HiraganaDifficulty() {
+
+    const { listDisplayed, handleListDisplay, classNames } = useHiraganaContext();
+
     return (
         <Switch.Group as="div" className="mt-6 ms-2.5 flex items-center">
             <span className={listDisplayed ? 'text-gray-600 text-xl me-4' : 'text-gray-100 text-xl me-4'}>hide list</span>

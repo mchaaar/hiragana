@@ -1,6 +1,9 @@
 import { hiraganas } from './Hiraganas';
+import { useHiraganaContext } from './hooks/HiraganaContext';
 
-export default function HiraganaList({sorted}) {
+export default function HiraganaList() {
+
+    const { sorted } = useHiraganaContext();
 
     const hiraganaArray = Object.entries(hiraganas.base).map(([character, romaji]) => {
         return { hiragana: character, romaji: romaji };

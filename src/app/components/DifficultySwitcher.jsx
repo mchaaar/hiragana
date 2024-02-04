@@ -1,8 +1,12 @@
 import { Switch } from '@headlessui/react';
 import { PlusIcon } from '@heroicons/react/20/solid';
 import { MinusIcon } from '@heroicons/react/20/solid';
+import { useHiraganaContext } from './hooks/HiraganaContext';
 
-export default function DifficultySwitcher({hardMode, decreaseDifficulty, increaseDifficulty, handleModeChange, classNames}){
+export default function DifficultySwitcher(){
+
+    const { hardMode, decreaseDifficulty, increaseDifficulty, handleModeChange, classNames } = useHiraganaContext();
+
     return (
         <Switch.Group as="div" className="flex items-center">
             {hardMode && (

@@ -1,6 +1,10 @@
 import { Switch } from '@headlessui/react';
+import { useHiraganaContext } from './hooks/HiraganaContext';
 
-export default function HiraganaListSort({sorted, handleSortedChange, classNames}) {
+export default function HiraganaListSort() {
+
+    const { sorted, handleSortedChange, classNames } = useHiraganaContext();
+
     return (
         <Switch.Group as="div" className="mb-12 me-6 justify-center flex items-center">
             <span className={sorted ? 'text-gray-600 text-xl me-4' : 'text-gray-100 text-xl me-4'}>unsorted</span>
