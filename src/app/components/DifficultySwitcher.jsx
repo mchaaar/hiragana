@@ -4,7 +4,7 @@ import { MinusIcon } from '@heroicons/react/20/solid';
 import { useHiraganaContext } from './hooks/HiraganaContext';
 
 export default function DifficultySwitcher(){
-
+ 
     const { hardMode, decreaseDifficulty, increaseDifficulty, handleModeChange, classNames } = useHiraganaContext();
 
     return (

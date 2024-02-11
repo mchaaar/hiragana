@@ -18,7 +18,7 @@ export default function Home() {
       <main className="flex flex-col items-center">
         <SplineViewer />
         <HiraganaButtons />
-        <div className='mt-20 flex flex-col items-center'>
+        <div className='mt-10 flex flex-col items-center'>
           <DifficultySwitcher />
           <HiraganaListDisplay />
         </div>
