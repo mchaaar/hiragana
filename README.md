@@ -1,7 +1,7 @@
 
 
 # Want to use the website ?
-### Visit : [https://hiragana.vercel.app/](https://hiragana.vercel.app/)
+// temp shutdown
 
 ![Website's preview](https://github.com/Laiinn/hiragana/blob/main/public/thumbnailv2.png?raw=true)  
 
